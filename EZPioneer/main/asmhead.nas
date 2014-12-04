@@ -5,27 +5,27 @@ BOTPAK	EQU		0x00280000		; bootpackのロード先
 DSKCAC	EQU		0x00100000		; ディスクキャッシュの場所
 DSKCAC0	EQU		0x00008000		; ディスクキャッシュの場所（リアルモード）
 
-; BOOT_INFO関係
-CYLS	EQU		0x0ff0			; ブートセクタが設定する
-LEDS	EQU		0x0ff1
-VMODE	EQU		0x0ff2			; 色数に関する情報。何ビットカラーか？
-SCRNX	EQU		0x0ff4			; 解像度のX
-SCRNY	EQU		0x0ff6			; 解像度のY
-VRAM	EQU		0x0ff8			; グラフィックバッファの開始番地
+; 有?BOOT_INFO
+CYLS	EQU		0x0ff0			; ?定??区
+LEDS	EQU		0x0ff1			；??LED（如NumLock)状?的存入地址
+VMODE	EQU		0x0ff2			; ?于?色数目的信息。?色的位数的存入地址
+SCRNX	EQU		0x0ff4			; 分辨率的X（screen x)的存入地址
+SCRNY	EQU		0x0ff6			; 分辨率的Y（screen y)的存入地址
+VRAM	EQU		0x0ff8			; ?像?冲区的?始地址的存入地址
 
-		ORG		0xc200			; このプログラムがどこに読み込まれるのか
+		ORG		0xc200			; ?个程序将要被装?到内存的什?地方?？
 
 ; 画面モードを設定
 
-		MOV		AL,0x13			; VGAグラフィックス、320x200x8bitカラー
+		MOV		AL,0x13			; VGA ??，320*200*8位彩色
 		MOV		AH,0x00
 		INT		0x10
-		MOV		BYTE [VMODE],8	; 画面モードをメモする（C言語が参照する）
+		MOV		BYTE [VMODE],8	; ??画面模式
 		MOV		WORD [SCRNX],320
 		MOV		WORD [SCRNY],200
-		MOV		DWORD [VRAM],0x000a0000
+		MOV		DWORD [VRAM],0x000a0000		;?模式下VRAM是0xa0000-0xaffff的64KB（其?VRAM分布在内存的上的几个地方，?是其中之一）
 
-; キーボードのLED状態をBIOSに教えてもらう
+; 用BIOS取得??上各?LED指示灯状?
 
 		MOV		AH,0x02
 		INT		0x16 			; keyboard BIOS

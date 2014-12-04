@@ -1,18 +1,19 @@
 ; naskfunc
 ; TAB=4
 
-[FORMAT "WCOFF"]				; 对象文件制作模式	
+[FORMAT "WCOFF"]				; 制作目标文件的模式	
 [INSTRSET "i486p"]				; 486命令为止想用这样的记述
-[BITS 32]						; 32位模式用的机器语言让制作
-[FILE "naskfunc.nas"]			; 源文件名情报
-
+[BITS 32]						; 制作32位模式用的机械语言
+[FILE "naskfunc.nas"]			; 源文件名信息
+		; 需要链接的函数名都要用GLOBAL指令声明，函数名前加上 "_"，否则不能很好地与C语言函数链接（nask目标文件模式的规定）
 		GLOBAL	_io_hlt, _io_cli, _io_sti, _io_stihlt
 		GLOBAL	_io_in8,  _io_in16,  _io_in32
 		GLOBAL	_io_out8, _io_out16, _io_out32
 		GLOBAL	_io_load_eflags, _io_store_eflags
 		GLOBAL	_load_gdtr, _load_idtr
 
-[SECTION .text]
+;以下是实际的函数
+[SECTION .text]					; 目标问价暗中写了这些之后再写程序
 
 _io_hlt:	; void io_hlt(void);
 		HLT
