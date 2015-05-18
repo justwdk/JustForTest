@@ -2,7 +2,7 @@
 ; TAB=4
 
 [FORMAT "WCOFF"]				; 制作目标文件的模式	
-[INSTRSET "i486p"]				; 486命令为止想用这样的记述
+[INSTRSET "i486p"]				; 告诉nask，这个程序是给486使用的
 [BITS 32]						; 制作32位模式用的机械语言
 [FILE "naskfunc.nas"]			; 源文件名信息
 		; 需要链接的函数名都要用GLOBAL指令声明，函数名前加上 "_"，否则不能很好地与C语言函数链接（nask目标文件模式的规定）
@@ -13,7 +13,7 @@
 		GLOBAL	_load_gdtr, _load_idtr
 
 ;以下是实际的函数
-[SECTION .text]					; 目标问价暗中写了这些之后再写程序
+[SECTION .text]					; 目标文件中写了这些之后再写程序
 
 _io_hlt:	; void io_hlt(void);
 		HLT
@@ -70,7 +70,7 @@ _io_out32:	; void io_out32(int port, int data);
 _io_load_eflags:	; int io_load_eflags(void);
 		PUSHFD		; PUSH EFLAGS という意味
 		POP		EAX
-		RET
+		RET			; 执行RET语句时，EAX中的值被看作是函数的返回值
 
 _io_store_eflags:	; void io_store_eflags(int eflags);
 		MOV		EAX,[ESP+4]

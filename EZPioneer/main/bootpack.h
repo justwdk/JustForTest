@@ -5,7 +5,7 @@ struct BOOTINFO { /* 0x0ff0-0x0fff */
 	char vmode; /* 显卡模式为多少为彩色 */
 	char reserve;
 	short scrnx, scrny; /* 画面分辨率 */
-	char *vram;
+	char *vram; //图像缓冲区的开始地址
 };
 #define ADR_BOOTINFO	0x00000ff0
 

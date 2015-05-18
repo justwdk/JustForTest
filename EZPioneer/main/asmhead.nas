@@ -6,21 +6,21 @@ DSKCAC	EQU		0x00100000		; 僨傿僗僋僉儍僢僔儏偺応強
 DSKCAC0	EQU		0x00008000		; 僨傿僗僋僉儍僢僔儏偺応強乮儕傾儖儌乕僪乯
 
 ; 桳?BOOT_INFO
-CYLS	EQU		0x0ff0			; ?掕??嬫
-LEDS	EQU		0x0ff1			丟??LED乮擛NumLock)忬?揑懚擖抧毈
-VMODE	EQU		0x0ff2			; ?槹?怓悢栚揑怣懅丅?怓揑埵悢揑懚擖抧毈
-SCRNX	EQU		0x0ff4			; 暘櫈棪揑X乮screen x)揑懚擖抧毈
-SCRNY	EQU		0x0ff6			; 暘櫈棪揑Y乮screen y)揑懚擖抧毈
-VRAM	EQU		0x0ff8			; ?憸?檛嬫揑?巒抧毈揑懚擖抧毈
+CYLS	EQU		0x0ff0			; 设定启动区
+LEDS	EQU		0x0ff1			; ??LED乮擛NumLock)忬?揑懚擖抧毈
+VMODE	EQU		0x0ff2			; 关于颜色数目的信息。颜色的位数
+SCRNX	EQU		0x0ff4			; 分辨率的X（screen X）
+SCRNY	EQU		0x0ff6			; 分辨率的X（screen Y）
+VRAM	EQU		0x0ff8			; 图像缓冲区的开始地址
 
-		ORG		0xc200			; ?槩掱彉彨梫旐憰?摓撪懚揑廦?抧曽?丠
+		ORG		0xc200			; 这个程序将要被装载到内存的地址
 
 ; 夋柺儌乕僪傪愝掕
 
-		MOV		AL,0x13			; VGA ??丆320*200*8埵嵤怓
+		MOV		AL,0x13			; VGA 显卡320*200*8位彩色
 		MOV		AH,0x00
-		INT		0x10
-		MOV		BYTE [VMODE],8	; ??夋柺柾幃
+		INT		0x10			; ?帵夋柺揑BIOS拞抐?梡
+		MOV		BYTE [VMODE],8	; 记录画面模式
 		MOV		WORD [SCRNX],320
 		MOV		WORD [SCRNY],200
 		MOV		DWORD [VRAM],0x000a0000		;?柾幃壓VRAM惀0xa0000-0xaffff揑64KB乮懘?VRAM暘晍嵼撪懚揑忋揑檣槩抧曽丆?惀懘拞擵堦乯
